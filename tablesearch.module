@@ -7,8 +7,8 @@
 /**
  * Implements hook_theme_registry_alter().
  */
-function tablesearch_theme_registry_alter($hooks) {
-  $hooks['theme_table']['variables']['tablesearch'] = false;
+function tablesearch_theme_registry_alter(&$hooks) {
+  $hooks['table']['variables']['tablesearch'] = false;
 }
 
 /**
