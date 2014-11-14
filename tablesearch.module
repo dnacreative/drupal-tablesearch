@@ -1,0 +1,72 @@
+<?php
+/**
+ * @file
+ * Table Search module.
+ */
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function tablesearch_theme_registry_alter($hooks) {
+  $hooks['theme_table']['variables']['tablesearch'] = false;
+}
+
+/**
+ * Build attributes for table from the given options.
+ *
+ * @param array $attributes
+ * @param boolean|array $options
+ */
+function _tablesearch_preprocess_build_options(array &$attributes, $options) {
+  if (empty($attributes['class'])) {
+    $attributes['class'] = array();
+  }
+  if (!in_array('tablesearch', $attributes['class'])) {
+    $attributes['class'][] = 'tablesearch';
+  }
+  if (is_array($options)) {
+    // theme_tableselect does not propagates any attributes than
+    // the "class" attribute thus forcing us to dispatch properties
+    // through Drupal settings instead if we want to support it.
+    // That's a shame.
+    $settings = array();
+    if ($options['get']) {
+      $settings['get'] = 1;
+    }
+    if ($options['name']) {
+      $settings['name'] = $options['name'];
+    }
+    if (!empty($settings)) {
+      // We don't need anyother setting than the '.tablesearch' class
+      // so if customizations are not necessary we don't propagate any
+      // JavaScript setting.
+      if (empty($attributes['id'])) {
+        $attributes['id'] = drupal_clean_css_identifier('tablesearch-' . current_path());;
+      }
+      drupal_add_js(array('TableSearch' => array($attributes['id'] => $settings)), 'setting');
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function tablesearch_preprocess_tableselect(&$variables) {
+  if (empty($variables['element']['#tablesearch'])) {
+    return;
+  }
+  _tablesearch_preprocess_build_options(
+    $variables['element']['#attributes'],
+    $variables['element']['#tablesearch']
+  );
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function tablesearch_preprocess_table(&$variables) {
+  if (empty($variables['tablesearch'])) {
+    return;
+  }
+  _tablesearch_preprocess_build_options($variables['attributes'], $variables['tablesearch']);
+}

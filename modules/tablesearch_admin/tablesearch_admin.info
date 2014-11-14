@@ -1,0 +1,5 @@
+name = Table Search - Core admin
+description = Uses the Table Search module to alter various core forms.
+core = 7.x
+package = Utility
+version = 7.x-1.0

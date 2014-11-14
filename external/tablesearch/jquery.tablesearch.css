@@ -1,0 +1,17 @@
+table.tablesearch tr.search {
+  background-color: #353535;
+  color: #c0c0c0;
+}
+
+table.tablesearch tr.search th {
+  background-color: transparent;
+}
+
+table.tablesearch input.search-query {
+  border-radius: 10px;
+  padding: 3px 10px;
+  float: right;
+  margin: 5px 0;
+  background: white url(search.png) right 7px center no-repeat;
+  width: 8em;
+}

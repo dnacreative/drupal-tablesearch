@@ -1,0 +1,24 @@
+<?php
+/**
+ * @file
+ * Table Search admin module.
+ */
+
+/**
+ * Implements hook_page_alter().
+ */
+function tablesearch_admin_page_alter(&$page) {
+  switch (current_path()) {
+
+    case 'admin/structure/types':
+      $page['content']['system_main']['node_table']['#attributes']['class'][] = 'tablesearch';
+      break;
+
+    case 'admin/reports/fields':
+      // Cannot do this because stupid field_ui_fields_list() function
+      // returns a string instead of a build array. Keeping this as a
+      // nice comment for posterity.
+      //$page['content']['system_main']['table']['#attributes']['class'][] = 'tablesearch';
+      break;
+  }
+}
