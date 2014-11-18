@@ -82,7 +82,7 @@
         }
       });
       this.input.keyup(function () {
-        if (!input.val().trim()) {
+        if (!self.input.val().trim()) {
           self.reset();
         }
       });
